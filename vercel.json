@@ -1,9 +1,4 @@
 {
-  "buildCommand": "prisma generate && next build",
-  "framework": "nextjs",
-  "build": {
-    "env": {
-      "NEXT_PRIVATE_TURBOPACK": "0"
-    }
-  }
+  "buildCommand": "prisma generate && next build --webpack",
+  "framework": "nextjs"
 }
