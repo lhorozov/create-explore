@@ -87,13 +87,13 @@ export default function Home() {
               Открийте вкуса на традицията в съчетание с иновациите. Всяко ястие е приготвено с любов и внимание към детайла.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild className="shadow-2xl bg-white text-orange-600 hover:bg-white/90">
+              <Button size="lg" asChild className="shadow-2xl bg-white text-primary hover:bg-white/90">
                 <Link href="/menu">
                   <UtensilsCrossed className="mr-2 h-5 w-5" />
                   Виж менюто
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="bg-white/10 backdrop-blur-md border-white/50 text-white hover:bg-white/20 shadow-2xl">
+              <Button size="lg" variant="outline" asChild className="bg-white/10 backdrop-blur-md border-white/50 text-white hover:bg-white/20 hover:text-white shadow-2xl">
                 <Link href="/contacts">
                   Направи резервация
                 </Link>
