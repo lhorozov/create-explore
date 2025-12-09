@@ -3,7 +3,14 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { 
+  NavigationMenu, 
+  NavigationMenuItem, 
+  NavigationMenuList,
+  navigationMenuTriggerStyle 
+} from "@/components/ui/navigation-menu";
 import { Menu, UtensilsCrossed } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: "Начало" },
@@ -24,20 +31,25 @@ export function Navigation() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <Button asChild variant="default">
-            <Link href="/login">Вход</Link>
-          </Button>
-        </nav>
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList>
+            {navItems.map((item) => (
+              <NavigationMenuItem key={item.href}>
+                <Link 
+                  href={item.href}
+                  className={cn(navigationMenuTriggerStyle())}
+                >
+                  {item.label}
+                </Link>
+              </NavigationMenuItem>
+            ))}
+            <NavigationMenuItem className="ml-4">
+              <Button asChild variant="default" size="sm">
+                <Link href="/login">Вход</Link>
+              </Button>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
         {/* Mobile Navigation */}
         <Sheet>

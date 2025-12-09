@@ -57,26 +57,43 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-orange-50 to-amber-50 dark:from-zinc-900 dark:to-zinc-800 py-20 md:py-32">
-        <div className="container">
+      <section className="relative overflow-hidden min-h-[600px] flex items-center py-20 md:py-32">
+        {/* Video Background */}
+        <div className="absolute inset-0 w-full h-full">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+          </video>
+          {/* Dark Overlay */}
+          <div className="absolute inset-0 bg-black/50 z-10" />
+          {/* Subtle Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-900/20 via-transparent to-amber-900/20 z-10" />
+        </div>
+        
+        <div className="container relative z-20">
           <div className="max-w-3xl mx-auto text-center space-y-8">
-            <Badge variant="secondary" className="text-sm">
+            <Badge variant="secondary" className="text-sm bg-white/90 backdrop-blur-sm">
               Добре дошли в Ресторант Вкус
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white drop-shadow-2xl">
               Автентична българска кухня с модерен twist
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
+            <p className="text-lg md:text-xl text-white/95 drop-shadow-lg">
               Открийте вкуса на традицията в съчетание с иновациите. Всяко ястие е приготвено с любов и внимание към детайла.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
+              <Button size="lg" asChild className="shadow-2xl bg-white text-orange-600 hover:bg-white/90">
                 <Link href="/menu">
                   <UtensilsCrossed className="mr-2 h-5 w-5" />
                   Виж менюто
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline" asChild className="bg-white/10 backdrop-blur-md border-white/50 text-white hover:bg-white/20 shadow-2xl">
                 <Link href="/contacts">
                   Направи резервация
                 </Link>
