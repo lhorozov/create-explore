@@ -271,27 +271,97 @@ Future implementation will include:
 
 ## 🌐 Deployment
 
-### Vercel (Recommended)
+### Vercel + Turso (Recommended for Serverless)
+
+**Turso** is a serverless SQLite database that works perfectly with Vercel's serverless architecture.
+
+#### 1. Setup Turso Database
+
 ```bash
-# Install Vercel CLI
+# Install Turso CLI
+curl -sSfL https://get.tur.so/install.sh | bash
+
+# Login to Turso
+turso auth login
+
+# Create database
+turso db create restaurant-db
+
+# Get database URL
+turso db show restaurant-db --url
+# Output: libsql://restaurant-db-yourname.turso.io
+
+# Create auth token
+turso db tokens create restaurant-db
+# Output: eyJhbGc...your-token...
+```
+
+#### 2. Configure Environment Variables
+
+Add to Vercel project settings or `.env.production`:
+
+```env
+TURSO_DATABASE_URL="libsql://restaurant-db-yourname.turso.io"
+TURSO_AUTH_TOKEN="your-token-here"
+NODE_ENV="production"
+```
+
+#### 3. Push Schema to Turso
+
+```bash
+# Set environment variables locally
+export TURSO_DATABASE_URL="libsql://restaurant-db-yourname.turso.io"
+export TURSO_AUTH_TOKEN="your-token-here"
+
+# Push schema
+pnpm run db:push
+
+# Seed database
+pnpm run db:seed
+```
+
+#### 4. Deploy to Vercel
+
+```bash
+# Install Vercel CLI (if not installed)
 npm i -g vercel
 
 # Deploy
 vercel
+
+# Or connect to GitHub for automatic deployments
 ```
 
-### Production Database
-For production, switch to PostgreSQL:
+---
+
+### Alternative: PostgreSQL (Traditional)
+
+For traditional hosting (not serverless), use PostgreSQL:
+
 ```env
 DATABASE_URL="postgresql://user:password@host:5432/database"
 ```
 
-Update `prisma/schema.prisma`:
-```prisma
-datasource db {
-  provider = "postgresql"
-}
+Update `lib/prisma.ts` to use standard PostgreSQL adapter:
+
+```typescript
+import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg'
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+const adapter = new PrismaPg(pool)
 ```
+
+---
+
+### Environment Variables Reference
+
+| Variable | Development | Production (Turso) | Production (PostgreSQL) |
+|----------|-------------|-------------------|------------------------|
+| `DATABASE_URL` | `file:./dev.db` | - | `postgresql://...` |
+| `TURSO_DATABASE_URL` | - | `libsql://...` | - |
+| `TURSO_AUTH_TOKEN` | - | Required | - |
+| `NODE_ENV` | `development` | `production` | `production` |
 
 ## 🤝 Contributing
 

@@ -1,12 +1,6 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaLibSql } from '@prisma/adapter-libsql'
+import prisma from '../lib/prisma'
 import 'dotenv/config'
-
-const adapter = new PrismaLibSql({
-  url: 'file:./dev.db',
-})
-
-const prisma = new PrismaClient({ adapter })
 
 async function main() {
   console.log('🌱 Започване на seed...')
