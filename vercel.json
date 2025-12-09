@@ -1,3 +1,3 @@
 {
-  "buildCommand": "prisma generate && next build --no-turbopack"
+  "buildCommand": "TURBOPACK=0 prisma generate && next build"
 }
