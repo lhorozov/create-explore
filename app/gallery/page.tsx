@@ -15,15 +15,15 @@ export default function GalleryPage() {
     { category: "Храна", emoji: "🍰", description: "Домашни десерти" },
     { category: "Храна", emoji: "🥘", description: "Специалитети" },
     { category: "Храна", emoji: "🍷", description: "Избрани вина" },
-    { category: "Події", emoji: "🎉", description: "Празнични вечери" },
-    { category: "Події", emoji: "🎵", description: "Музикални вечери" },
+    { category: "Събития", emoji: "🎉", description: "Празнични вечери" },
+    { category: "Събития", emoji: "🎵", description: "Музикални вечери" },
     { category: "Дани", emoji: "🎂", description: "Рождени дни" },
     { category: "Екип", emoji: "👨‍🍳", description: "Нашият екип" },
     { category: "Екип", emoji: "👩‍🍳", description: "В кухнята" },
     { category: "Екип", emoji: "👨‍💼", description: "Обслужване" },
   ];
 
-  const categories = ["Всички", "Интериор", "Градина", "Храна", "Події", "Екип"];
+  const categories = ["Всички", "Интериор", "Градина", "Храна", "Събития", "Екип"];
 
   return (
     <div className="flex flex-col">
