@@ -1,6 +1,6 @@
 # 🍽️ Restaurant Management System
 
-A modern, full-stack restaurant management web application built with Next.js 15, TypeScript, Prisma 7, and SQLite. This project demonstrates professional-grade architecture, database design, and RESTful API implementation.
+A modern, full-stack restaurant management web application built with Next.js 15, TypeScript, Prisma 7, and PostgreSQL (Neon). This project demonstrates professional-grade architecture, database design, and RESTful API implementation.
 
 ## 🎯 Project Overview
 
@@ -35,9 +35,10 @@ This is a comprehensive restaurant website featuring both customer-facing pages 
 - **Lucide React** - Beautiful icon system
 
 ### Backend & Database
-- **Prisma 7** - Next-generation ORM
-- **SQLite** - Embedded database (production-ready for PostgreSQL)
-- **@libsql/client** - High-performance database adapter
+- **Prisma 7** - Next-generation ORM with driver adapters
+- **PostgreSQL** - Robust relational database
+- **Neon** - Serverless PostgreSQL (production)
+- **@prisma/adapter-pg** - PostgreSQL driver adapter for Prisma
 - **Next.js API Routes** - Serverless API endpoints
 
 ### Development Tools
@@ -229,9 +230,9 @@ create-explore/
 │   └── utils.ts             # Helper functions
 ├── prisma/                   # Database
 │   ├── schema.prisma        # Database schema
-│   └── seed.ts              # Seed script
-├── public/                   # Static assets
-└── dev.db                    # SQLite database file
+│   ├── seed.ts              # Seed script
+│   └── prisma.config.ts     # Prisma configuration
+└── public/                   # Static assets
 ```
 
 ## 🎨 UI Components
@@ -271,50 +272,38 @@ Future implementation will include:
 
 ## 🌐 Deployment
 
-### Vercel + Turso (Recommended for Serverless)
+### Vercel + Neon (Recommended for Production)
 
-**Turso** is a serverless SQLite database that works perfectly with Vercel's serverless architecture.
+**Neon** is a serverless PostgreSQL database that works perfectly with Vercel's serverless architecture. It offers automatic scaling, branching, and a generous free tier.
 
-#### 1. Setup Turso Database
+#### 1. Setup Neon Database
 
-```bash
-# Install Turso CLI
-curl -sSfL https://get.tur.so/install.sh | bash
-
-# Login to Turso
-turso auth login
-
-# Create database
-turso db create restaurant-db
-
-# Get database URL
-turso db show restaurant-db --url
-# Output: libsql://restaurant-db-yourname.turso.io
-
-# Create auth token
-turso db tokens create restaurant-db
-# Output: eyJhbGc...your-token...
-```
+1. Go to [neon.tech](https://neon.tech) and sign up (free)
+2. Create a new project:
+   - **Name**: `restaurant-db`
+   - **Region**: AWS Europe (Frankfurt) - `eu-central-1` (closest to Europe)
+   - **Database**: `neondb` (default)
+3. Copy the connection string from the dashboard
 
 #### 2. Configure Environment Variables
 
-Add to Vercel project settings or `.env.production`:
+Add to Vercel project settings (Settings → Environment Variables):
 
 ```env
-TURSO_DATABASE_URL="libsql://restaurant-db-yourname.turso.io"
-TURSO_AUTH_TOKEN="your-token-here"
+DATABASE_URL="postgresql://user:password@ep-xxx.eu-central-1.aws.neon.tech/neondb?sslmode=require"
 NODE_ENV="production"
 ```
 
-#### 3. Push Schema to Turso
+**Important**: Use the **pooled connection string** (with `-pooler` in the hostname) for better performance in serverless environments.
+
+#### 3. Push Schema to Neon
 
 ```bash
-# Set environment variables locally
-export TURSO_DATABASE_URL="libsql://restaurant-db-yourname.turso.io"
-export TURSO_AUTH_TOKEN="your-token-here"
+# Add DATABASE_URL to your .env file
+# Copy from Neon dashboard
 
-# Push schema
-pnpm run db:push
+# Push schema to Neon
+pnpm prisma db push
 
 # Seed database
 pnpm run db:seed
