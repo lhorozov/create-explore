@@ -15,8 +15,6 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@libsql/client": "^0.15.15",
-    "@prisma/adapter-libsql": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -28,7 +26,6 @@
     "@radix-ui/react-tabs": "^1.1.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "libsql": "^0.5.22",
     "lucide-react": "^0.556.0",
     "next": "16.0.8",
     "pg": "^8.16.3",
