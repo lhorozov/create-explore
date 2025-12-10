@@ -1,6 +1,6 @@
+import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 import prisma from '../lib/prisma'
-import 'dotenv/config'
 
 async function main() {
   console.log('🌱 Започване на seed...')
