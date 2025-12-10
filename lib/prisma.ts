@@ -32,9 +32,13 @@ function getDatabaseUrl() {
 
 // Create Prisma adapter with proper configuration
 const databaseUrl = getDatabaseUrl()
+
+// Check if we need auth token for remote database
+const isRemoteDb = databaseUrl.startsWith('libsql://') || databaseUrl.startsWith('https://')
+
 const adapter = new PrismaLibSql({
   url: databaseUrl,
-  authToken: process.env.TURSO_AUTH_TOKEN,
+  ...(isRemoteDb && process.env.TURSO_AUTH_TOKEN ? { authToken: process.env.TURSO_AUTH_TOKEN } : {}),
 })
 
 // Create Prisma Client with singleton pattern
